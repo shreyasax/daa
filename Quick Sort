@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<time.h>
+
+void quickSort(int arr[], int start, int end);
+int partition(int arr[], int start, int end);
+
+int main(){
+    int n=5;
+    int arr[100];
+
+   
+    double total_time;
+    clock_t startClock, endClock;
+
+    startClock= clock();
+
+    printf("Enter the no. of array elements:");
+    scanf("%d", &n);
+
+    printf("Enter the array elements:");
+    for(int i=0; i<n; i++){
+        scanf("%d", &arr[i]);
+    }
+
+ 
+    quickSort(arr, 0, n-1);
+   
+    for(int i=0; i<n; i++){
+        printf(" %d ", arr[i]);
+    }
+    printf("\n");
+
+   
+    endClock= clock();
+    total_time=(double)(endClock-startClock)/CLOCKS_PER_SEC;
+    printf("\nTIME= %lf", total_time);
+
+    return 0;
+}
+
+void quickSort(int arr[], int start, int end){
+    // base case
+    if(start>=end){
+        return;
+    }
+    // partition, p is index
+    int p=partition(arr, start, end);  
+   
+    quickSort(arr, start, p-1);
+   
+    quickSort(arr, p+1, end);
+}
+
+int partition(int *arr, int start, int end){
+    int pivot=arr[start];    
+                             
+
+    int i=start+1;
+    int j=end;    
+    int temp;
+                                                             
+    do{                                                        
+
+        while(arr[i]<=pivot){                                
+            i++;                                  
+        }                                        
+
+        while(arr[j]>pivot){                      
+                                                 
+            j--;
+        }                              
+        if(i<j){
+            temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;                                      
+        }
+    }while(i<j);
+   
+    temp=arr[start];
+    arr[start]=arr[j];
+    arr[j]=temp;
+   
+    return j;
+}
